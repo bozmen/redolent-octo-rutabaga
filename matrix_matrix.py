@@ -46,8 +46,6 @@ def reducer( a, b ):
 		 		return value1 * value2
 			else:
 				return 0
-
-	print("a: " + str(a) + " b: "+ str(b) + "\n");
 	first = b[0]
 	matrixName1 = first[0]
 	column1 = first[1]
@@ -86,10 +84,6 @@ if __name__ == '__main__':
 
 	elems1 = matrixlines1.flatMap(lambda line: flatMapper(line))
 	elems2 = matrixlines2.flatMap(lambda line: flatMapper(line))
-
-	output.write(str(elems1.collect()))
-	output.write("\n")
-	output.write(str(elems2.collect()))
 
 	elemPairs = elems1.join(elems2)
 
