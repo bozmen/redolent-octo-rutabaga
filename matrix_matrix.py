@@ -3,6 +3,7 @@ from __future__ import print_function
 import sys
 import subprocess
 from operator import add
+import time
 
 from pyspark import SparkContext
 
@@ -66,6 +67,7 @@ def reducer( a, b ):
 j = 0
 
 if __name__ == '__main__':
+	start_time = time.time()
 	a = 0
 	sc = SparkContext(appName="Matrix Vector Multiplication")
 
@@ -91,6 +93,8 @@ if __name__ == '__main__':
 
 	output.write("\n")
 	output.write(str(result.collect()))
+	elapsed_time = time.time() - start_time
+	output.write("\n" + str(elapsed_time) + "ms")
 	sc.stop()
 
 

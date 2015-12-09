@@ -9,6 +9,7 @@ from pyspark import SparkContext
 
 
 if __name__ == '__main__':
+	start_time = time.time()
 	a = 0
 	sc = SparkContext(appName="Matrix Vector Multiplication")
 
@@ -21,19 +22,14 @@ if __name__ == '__main__':
 	elems1 = matrixlines1.flatMap(lambda line: flatMapper(line))
 	elems2 = matrixlines2.flatMap(lambda line: flatMapper(line))
 
-	output.write(str(elems1.collect()))
-	output.write("\n")
-	output.write(str(elems2.collect()))
-
 	elemPairs = elems1.join(elems2)
-
-	output.write("\n")
-	# output.write(str(elemPairs.collect()))
 
 	result = elemPairs.reduceByKey(reducer)
 
 	output.write("\n")
 	output.write(str(result.collect()))
+	elapsed_time = time.time() - start_time
+	output.write("\n" + "annen")
 	sc.stop()
 
 
