@@ -74,12 +74,12 @@ if __name__ == '__main__':
 	k = args[3]
 	# generates random matrices
 	file_generate_start = current_milli_time()
-	subprocess.call(["/home/ozzmen/Desktop/projects/cs425/a.out", i, j, k])
+	subprocess.call(["/home/ozzmen/Desktop/projects/cs425/matrix_matrix_generator.out", i, j, k])
 	file_generate_finish = current_milli_time()
 
 	matrixlines1 = sc.textFile("/home/ozzmen/Downloads/spark-1.5.2/" + i + "x" + j + "_1.txt", 1)
 	matrixlines2 = sc.textFile("/home/ozzmen/Downloads/spark-1.5.2/" + j + "x" + k + "_2.txt", 1)
-	output = open("/home/ozzmen/Desktop/projects/cs425/output.txt", "w")
+	output = open("/home/ozzmen/Desktop/projects/cs425/matrix_matrix_output.txt", "w")
 
 
 	map_start = current_milli_time()
