@@ -30,7 +30,6 @@ def mapper( k,v ):
 	return(k, v)
 
 def reducer( a, b ):
-
 	if isinstance(a, tuple):
 		first = a[0]
 		matrixName1 = first[0]
@@ -64,37 +63,45 @@ def reducer( a, b ):
 			return a
 
 
-j = 0
-
 if __name__ == '__main__':
-	start_time = time.time()
-	a = 0
-	sc = SparkContext(appName="Matrix Vector Multiplication")
+	current_milli_time = lambda: int(round(time.time() * 1000))
+	start_time = current_milli_time()
 
+	sc = SparkContext(appName="Matrix Vector Multiplication")
 	args = sys.argv
 	i = args[1]
 	j = args[2]
 	k = args[3]
 	# generates random matrices
+	file_generate_start = current_milli_time()
 	subprocess.call(["/home/ozzmen/Desktop/projects/cs425/a.out", i, j, k])
+	file_generate_finish = current_milli_time()
 
 	matrixlines1 = sc.textFile("/home/ozzmen/Downloads/spark-1.5.2/" + i + "x" + j + "_1.txt", 1)
 	matrixlines2 = sc.textFile("/home/ozzmen/Downloads/spark-1.5.2/" + j + "x" + k + "_2.txt", 1)
 	output = open("/home/ozzmen/Desktop/projects/cs425/output.txt", "w")
 
 
-
+	map_start = current_milli_time()
 	elems1 = matrixlines1.flatMap(lambda line: flatMapper(line))
 	elems2 = matrixlines2.flatMap(lambda line: flatMapper(line))
+	map_finish = current_milli_time()
 
+	join_start = current_milli_time()
 	elemPairs = elems1.join(elems2)
+	join_finish = current_milli_time()
 
+	reduce_start = current_milli_time()
 	result = elemPairs.reduceByKey(reducer)
+	reduce_finish = current_milli_time()
 
 	output.write("\n")
-	output.write(str(result.collect()))
-	elapsed_time = time.time() - start_time
-	output.write("\n" + str(elapsed_time) + "ms")
+	elapsed_time = current_milli_time() - start_time
+	output.write("\nTotal elapsed time: " + str(elapsed_time) + "ms")
+	output.write("\nFile generation time: " + str(file_generate_finish - file_generate_start) + "ms")
+	output.write("\nMap time: " + str(map_finish - map_start) + "ms")
+	output.write("\nJoin time: " + str(join_finish - join_start) + "ms")
+	output.write("\nReduce time: " + str(reduce_finish - reduce_start) + "ms")
 	sc.stop()
 
 
