@@ -1,7 +1,7 @@
 
 
-Total elapsed time: 3253ms
-File generation time: 4ms
+Total elapsed time: 333872ms
+File generation time: 330269ms
 Map time: 0ms
-Join time: 85ms
-Reduce time: 2ms
+Join time: 110ms
+Reduce time: 4ms

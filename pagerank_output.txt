@@ -1,0 +1,7 @@
+
+Total elapsed time: 205177ms
+Iteration time: 201865ms
+Average intteration time: 201865ms
+Map time: 24.0ms
+Reduce time: 21.0ms
+Collect time: 201820ms
